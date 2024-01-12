@@ -1,0 +1,23 @@
+.div_content{
+	border: 1px solid silver;
+	padding: 15px;
+	margin-bottom: 10px;
+}
+
+
+.label-tab1{
+        border: 1px solid #84C529 !important;
+        color: #84C529 !important;
+    }
+.label-tab2{
+   border: 1px solid #28B8DA !important;
+    color: #28B8DA !important;
+}
+.label-tabus{
+   border: 1px solid red !important;
+    color: red !important;
+}
+.label-tab3{
+   border: 1px solid #da2828 !important;
+    color: #da2828 !important;
+}
