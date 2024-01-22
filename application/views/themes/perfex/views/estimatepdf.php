@@ -100,8 +100,11 @@ if (is_sale_discount_applied($estimate)) {
     $tbltotal .= '</td>';
     $tbltotal .= '<td align="right" width="15%">-' . app_format_money($estimate->discount_total, $estimate->currency_name) . '</td>
     </tr>';
+  
 }
-
+  //for total before tax
+  $tbltotal .= '<tr> <td align="right" width="85%"><strong> Total</strong></td>';
+  $tbltotal.= ' <td align="right" width="15%">' . app_format_money($estimate->subtotal-$estimate->discount_total, $estimate->currency_name) . '</td></tr>';
 foreach ($items->taxes() as $tax) {
     $tbltotal .= '<tr>
     <td align="right" width="85%"><strong>' . $tax['taxname'] . ' (' . app_format_number($tax['taxrate']) . '%)' . '</strong></td>

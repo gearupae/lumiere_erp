@@ -180,13 +180,16 @@ if (is_sale_discount_applied($estimate)) {
     $tbltotal .= '
     <tr>
         <td align="right" width="85%"><strong>' . _l('estimate_discount');
-    if (is_sale_discount($estimate, 'percent')) {
-        $tbltotal .= ' (' . app_format_number($estimate->discount_percent, true) . '%)';
-    }
+    // if (is_sale_discount($estimate, 'percent')) {
+    //     $tbltotal .= ' (' . app_format_number($estimate->discount_percent, true) . '%)';
+    // }
     $tbltotal .= '</strong>';
     $tbltotal .= '</td>';
     $tbltotal .= '<td align="right" width="15%">-' . app_format_money($estimate->discount_total, $estimate->currency_name) . '</td>
     </tr>';
+     //for total before tax
+  $tbltotal .= '<tr> <td align="right" width="85%"><strong> Total</strong></td>';
+  $tbltotal.= ' <td align="right" width="15%">' . app_format_money($estimate->subtotal-$estimate->discount_total, $estimate->currency_name) . '</td></tr>';
 }
 
 

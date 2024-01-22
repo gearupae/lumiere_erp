@@ -143,13 +143,16 @@ $items_html .= '<table cellpadding="6" style="font-size:14px"><tbody>';
         $items_html .= '
         <tr>
             <td align="right" width="85%"><strong>' . _l('estimate_discount');
-        if (is_sale_discount($proposal, 'percent')) {
-            $items_html .= ' (' . app_format_number($proposal->discount_percent, true) . '%)';
-        }
+        // if (is_sale_discount($proposal, 'percent')) {
+        //     $items_html .= ' (' . app_format_number($proposal->discount_percent, true) . '%)';
+        // }
         $items_html .= '</strong>';
         $items_html .= '</td>';
         $items_html .= '<td align="right" width="15%">-' . app_format_money($proposal->discount_total, $proposal->currency_name) . '</td>
         </tr>';
+          //for total before tax
+        $items_html .= '<tr> <td align="right" width="85%"><strong> Total</strong></td>';
+        $items_html.= ' <td align="right" width="15%">' . app_format_money($total-$proposal->discount_total, $proposal->currency_name) . '</td></tr>';
     }
     $itemss = get_items_table_data($proposal, 'proposal', 'pdf')
         ->set_headings('estimate');

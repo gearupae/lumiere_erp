@@ -105,21 +105,21 @@
             <tbody>
                 <tr class="main">
                 <?php if (isset($type) && (($type == "proposal") ||( $type = "estimate"))) { ?>
-                    <td><input type="input" name="group_name" class="form-control"></td>
+                    <td><input type="input" id="group-name"  name="group_name" class="form-control"></td>
                     <?php } else{ ?>
                         <td></td>
                         <?php } ?>
                     <td>
                         <textarea name="description" rows="4" class="form-control"
-                            placeholder="<?php echo _l('item_description_placeholder'); ?>"></textarea>
+                            placeholder="<?php echo _l('item_description_placeholder'); ?>" id="item-description"></textarea>
                     </td>
                     <td>
                         <textarea name="long_description" rows="4" class="form-control"
-                            placeholder="<?php echo _l('item_long_description_placeholder'); ?>"></textarea>
+                            placeholder="<?php echo _l('item_long_description_placeholder'); ?>" id="description"></textarea>
                     </td>
                     <?php echo render_custom_fields_items_table_add_edit_preview(); ?>
                     <td>
-                        <input type="number" name="quantity" min="0" value="1" class="form-control"
+                        <input type="number" name="quantity" min="0" id="item-qty" value="1" class="form-control"
                             placeholder="<?php echo _l('item_quantity_placeholder'); ?>">
                         <input type="text" placeholder="<?php echo _l('unit'); ?>" data-toggle="tooltip" 612
                             data-title="e.q kg, lots, packs" name="unit"
@@ -127,7 +127,7 @@
                     </td>
                     <?php if (isset($type) && ($type == "proposal")) { ?>
                         <td>
-                            <input type="number" id="cost" name="cost" class="form-control"
+                            <input type="number" id="cost"  name="cost" class="form-control"
                                 placeholder="<?php echo _l('Cost'); ?>">
                         </td>
                         <td>
@@ -167,7 +167,7 @@
                          $new_item = true;
                      }
                      ?>
-                        <button type="button"
+                        <button type="button" id="myButton"
                             onclick="add_item_to_table('undefined','undefined',<?php echo $new_item; ?>); return false;"
                             class="btn pull-right btn-primary"><i class="fa fa-check"></i></button>
                     </td>
@@ -220,7 +220,7 @@
                              $table_row .= '</td>';
                              if ((isset($type) && (($type == "proposal") ))) {
                                 $table_row .= '<td><input type="text" placeholder="Cost" name="' . $items_indicator . '[' . $i . '][cost]" class="form-control" value="' . $item['cost'] . '"></td>';
-                                $table_row .= '<td><input type="text" placeholder="Profit" name="' . $items_indicator . '[' . $i . '][profit]" class="form-control" value="' . floatval($item['rate']) - floatval($item['cost']) . '"></td>';
+                                $table_row .= '<td><input type="text" placeholder="Profit" name="' . $items_indicator . '[' . $i . '][profit]" class="form-control" value="' .( floatval($item['rate']) - floatval($item['cost'])) . '"></td>';
                              }
                              $table_row .= '<td class="rate"><input type="number" data-toggle="tooltip" title="' . _l('numbers_not_formatted_while_editing') . '" onblur="calculate_total();" onchange="calculate_total();" name="' . $items_indicator . '[' . $i . '][rate]" value="' . $item['rate'] . '" class="form-control"></td>';
                            
@@ -332,3 +332,4 @@
     </div>
     <div id="removed-items"></div>
 </div>
+ 

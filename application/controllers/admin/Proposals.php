@@ -132,6 +132,7 @@ class Proposals extends AdminController
         }
     }
 
+ 
     public function proposal($id = '')
     {
         if ($this->input->post()) {

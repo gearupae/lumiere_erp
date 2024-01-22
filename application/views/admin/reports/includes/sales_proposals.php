@@ -1,12 +1,26 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <div id="proposals-reports" class="hide">
+<!-- <?php foreach($projects as $project){ ?>
+            <option value="<?php echo $project['id']; ?>"><?php echo $project['name']; ?></option>
+            <?php } ?> -->
  <div class="row">
    <div class="col-md-4">
-      <div class="form-group">
+   <div class="form-group">
          <label for="proposal_status"><?php echo _l('proposal_status'); ?></label>
          <select name="proposal_status" class="selectpicker" multiple data-width="100%" data-none-selected-text="<?php echo _l('invoice_status_report_all'); ?>">
             <?php foreach($proposals_statuses as $status){ ?>
             <option value="<?php echo $status; ?>"><?php echo format_proposal_status($status,'',false) ?></option>
+            <?php } ?>
+         </select>
+      </div>
+   </div>
+   <div class="col-md-4">
+      <div class="form-group">
+         <label for="project_filter">Projects</label>
+         <select name="project_filter" class="selectpicker"  data-width="100%" data-none-selected-text="<?php echo _l('invoice_status_report_all'); ?>">
+           <option value="">All </option>  
+          <?php foreach($projects as $project){ ?>
+            <option value="<?php echo $project['id']; ?>"><?php echo $project['name']; ?></option>
             <?php } ?>
          </select>
       </div>

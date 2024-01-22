@@ -17,7 +17,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 * environments.
 *
 */
-define('APP_BASE_URL', 'https://e.lumiereemc.com/');
+define('APP_BASE_URL', 'http://localhost/epr_new/');
 
 /*
 * --------------------------------------------------------------------------
@@ -32,36 +32,40 @@ define('APP_BASE_URL', 'https://e.lumiereemc.com/');
 *
 * Auto added on install
 */
-define('APP_ENC_KEY', '88bec1665c1792c2149a0ffa53067b1c');
+define('APP_ENC_KEY', '1c0a4edab08339d491d0cc0d03f787b2');
 
 /**
  * Database Credentials
  * The hostname of your database server
  */
-define('APP_DB_HOSTNAME', 'localhost:3306');
+define('APP_DB_HOSTNAME', 'localhost');
+
 /**
  * The username used to connect to the database
  */
-define('APP_DB_USERNAME', 'skillcan_lumiereerp');
+define('APP_DB_USERNAME', 'root');
+
 /**
  * The password used to connect to the database
  */
-define('APP_DB_PASSWORD', '_(^+DZ^)]fbu');
+define('APP_DB_PASSWORD', '');
+
 /**
  * The name of the database you want to connect to
  */
-define('APP_DB_NAME', 'skillcan_lumiereerp');
+define('APP_DB_NAME', 'test_db');
 
 /**
  * @since  2.3.0
  * Database charset
  */
-define('APP_DB_CHARSET', 'utf8');
+define('APP_DB_CHARSET', 'utf8mb4');
+
 /**
  * @since  2.3.0
  * Database collation
  */
-define('APP_DB_COLLATION', 'utf8_general_ci');
+define('APP_DB_COLLATION', 'utf8mb4_unicode_ci');
 
 /**
  *

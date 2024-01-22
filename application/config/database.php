@@ -87,9 +87,9 @@ if (defined('APP_DB_ENCRYPT')) {
 $db['default'] = array_merge([
     'dsn'          => '', // Not Supported
     'hostname'     => 'localhost',
-    'username'     => 'skillcan_lumiereerp',
-    'password'     => 'lumiere@789',
-    'database'     => 'skillcan_lumiereerp',
+    'username'     => 'root',
+    'password'     => '',
+    'database'     => 'test_db',
     'dbdriver'     => defined('APP_DB_DRIVER') ? APP_DB_DRIVER : 'mysqli',
     'dbprefix'     => db_prefix(),
     'pconnect'     => false,

@@ -13,6 +13,14 @@ $company_info .= '</div>';
 
 // Bill to
 $client_details = format_customer_info($payment->invoice_data, 'payment', 'billing');
+$invoice = $payment->invoice_data;
+if(!empty($invoice->project_data)){
+    $projectData  = $invoice->project_data;
+    $client_details .= $client_details.' <br><br>Project: '.$projectData->name;
+}
+
+// echo json_encode(get_project_info($payment->invoice_data));
+// die;
 
 $left_info  = $swap == '1' ? $client_details : $company_info;
 $right_info = $swap == '1' ? $company_info : $client_details;
@@ -56,6 +64,12 @@ $pdf->Cell(80, 10, _l('payment_total_amount'), 0, 1, 'C', '1');
 $pdf->SetFontSize(11);
 $pdf->Cell(80, 10, app_format_money($payment->amount, $payment->invoice_data->currency_name), 0, 1, 'C', '1');
 
+// $pdf->Ln(10);
+// $pdf->SetTextColor(0);
+// $pdf->SetFont($font_name, 'B', 14);
+// $pdf->Cell(0, 0, 'ddddd', 0, 1, 'L', 0, '', 0);
+// $pdf->SetFont($font_name, '', $font_size);
+// $pdf->Ln(5);
 $pdf->Ln(10);
 $pdf->SetTextColor(0);
 $pdf->SetFont($font_name, 'B', 14);

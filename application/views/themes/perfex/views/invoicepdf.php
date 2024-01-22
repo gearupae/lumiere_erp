@@ -109,14 +109,19 @@ if (is_sale_discount_applied($invoice)) {
     $tbltotal .= '
     <tr>
         <td align="right" width="85%"><strong>' . _l('invoice_discount');
-    if (is_sale_discount($invoice, 'percent')) {
-        $tbltotal .= ' (' . app_format_number($invoice->discount_percent, true) . '%)';
-    }
+    // if (is_sale_discount($invoice, 'percent')) {
+    //     $tbltotal .= ' (' . app_format_number($invoice->discount_percent, true) . '%)';
+    // }
     $tbltotal .= '</strong>';
     $tbltotal .= '</td>';
     $tbltotal .= '<td align="right" width="15%">-' . app_format_money($invoice->discount_total, $invoice->currency_name) . '</td>
     </tr>';
+        //for total before tax
+    $tbltotal .= '<tr> <td align="right" width="85%"><strong> Total</strong></td>';
+    $tbltotal.= ' <td align="right" width="15%">' . app_format_money($invoice->subtotal-$invoice->discount_total, $invoice->currency_name) . '</td></tr>';
+
 }
+
 
 foreach ($items->taxes() as $tax) {
     $tbltotal .= '<tr>

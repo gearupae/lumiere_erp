@@ -316,12 +316,17 @@
     </div>
 </div>
 <?php init_tail(); ?>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 <script>
 var _rel_id = $('#rel_id'),
     _rel_type = $('#rel_type'),
     _rel_id_wrapper = $('#rel_id_wrapper'),
     _project_wrapper = $('.projects-wrapper'),
     data = {};
+
+$("#file-upload-section").css("display", "block");
 
 $(function() {
     <?php if (isset($proposal) && $proposal->rel_type === 'customer') { ?>
@@ -456,6 +461,7 @@ $('#profit').on('change', function() {
 
 });
 $('#cost').on('change', function() {
+    console.log('changed');
     var profitPercentage = $('#cost_p').val();
     var cost = $('#cost').val();
     calculateSellingPrice(cost, profitPercentage)
@@ -485,8 +491,108 @@ function calculateProfitPercentage(cost, profit) {
 
     return profitPercentage;
 }
+
+
+$(document).ready(function() {
+  // Attach a change event handler to the file input
+  $('#import-file').change(function() {
+    handleFile();
+  });
+});
+
+
+function handleFile(){
+    console.log('working');
+    const reader = new FileReader();
+    const fileInput = document.getElementById('import-file');
+    const file = fileInput.files[0];
+    let dataArray = [];
+    if (!file) {
+        alert('Please select a file');
+        return;
+    }
+    reader.onload = function (e) {
+    const csvContent = e.target.result;
+    // Split the CSV content into rows
+    const rows = csvContent.split('\n');
+
+    // Example: Validate the header
+    const header = rows[0].trim().split(',');
+    const expectedHeader = ['group', 'item', 'description','qty','cost','profit','percentage']; 
+
+    if (!arraysEqual(header, expectedHeader)) {
+        toastr.error("Incorrect header in CSV file");
+        return;
+    }
+    // Use Papaparse to parse CSV content
+    Papa.parse(csvContent, {
+      complete: function (result) {
+        toastr.info('Importing products from csv file');
+        // displayData(result.data, outputDiv);
+         console.log(result.data);
+         displayData(result.data);
+      },
+      header: true, // Set to true if the CSV file has a header row
+    });
+  };
+  reader.readAsText(file);
+
+}
+
+// Helper function to check if two arrays are equal
+function arraysEqual(arr1, arr2) {
+    return JSON.stringify(arr1) === JSON.stringify(arr2);
+}
+
+function displayData(data) {
+  // Display the extracted data
+  data.forEach((row) => {
+    //    let rowData = JSON.parse(JSON.stringify(row));
+    //    console.log(rowData);
+       console.log(row.group);
+       addItemToTable(row);
+    
+  });
+  toastr.success('Products imported successfully');
+  $("#group-name").val('');
+    $("#item-description").html('');
+    $("#description").html('');
+    $("#item-qty").val('');
+    $("#cost").val('');
+    $("#profit").val('');
+    $("#cost_p").val(100);
+}
+
+function addItemToTable(item){
+   let error = false;
+   console.log('hello');
+   if(item.group!='' && item.item!='' && item.description!='' && item.qty!='' && item.cost!='' ){
+    console.log('in fun');
+    $("#group-name").val(item.group);
+    $("#item-description").html(item.item);
+    $("#description").html(item.description);
+    $("#item-qty").val(item.qty);
+    $("#cost").val(item.cost);
+   
+    if(item.profit!=''){
+        $("#profit").val(item.profit);
+        $("#profit").change();
+        $('#myButton').click();
+    }else if(item.percentage!=''){
+        console.log(item.percentage+'%');
+        $("#cost_p").val(item.percentage);
+        $("#cost_p").change();
+        $('#myButton').click();
+    }
+    
+   }
+}
 </script>
 
 </body>
 
 </html>
+
+<!-- git remote add origin https://github.com/ajaskv/lumiere_erp.git
+git branch -M main
+git push -u origin main -->

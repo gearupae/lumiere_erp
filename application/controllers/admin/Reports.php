@@ -89,7 +89,8 @@ class Reports extends AdminController
         $data['estimate_taxes']    = $this->distinct_taxes('estimate');
         $data['proposal_taxes']    = $this->distinct_taxes('proposal');
         $data['credit_note_taxes'] = $this->distinct_taxes('credit_note');
-
+        $query = $this->db->select('id,name')->get(db_prefix().'projects');
+        $data['projects'] = $query->result_array();
         $data['title'] = _l('sales_reports');
         $this->load->view('admin/reports/sales', $data);
     }
@@ -135,8 +136,29 @@ class Reports extends AdminController
             $aColumns     = $select;
             $sIndexColumn = 'userid';
             $sTable       = db_prefix() . 'clients';
-            $where        = [];
+            $where = [];
+            $filter = $this->input->post('customer_filter');
 
+            if(!empty($filter)){
+                if($filter==1){
+                    // 1=>Amount fully paid
+                    $where = ['WHERE (
+                        SELECT COUNT(clientid) 
+                        FROM '.db_prefix() .'invoices 
+                        WHERE '.db_prefix() .'invoices.clientid = '.db_prefix() .'clients.userid 
+                        AND status != 5 
+                        AND '.db_prefix() .'invoices.total > 0 '.$custom_date_select.' ) <= 0'];
+                }else if($filter==2){
+                    //2=> Amount pending
+                    $where = ['WHERE (
+                        SELECT COUNT(clientid) 
+                        FROM '.db_prefix() .'invoices 
+                        WHERE '.db_prefix() .'invoices.clientid = '.db_prefix() .'clients.userid 
+                        AND status != 5 
+                        AND '.db_prefix() .'invoices.total > 0 '.$custom_date_select.' ) > 0'];
+                }
+                    
+            }
             $result = data_tables_init($aColumns, $sIndexColumn, $sTable, [], $where, [
                 'userid',
             ]);
@@ -294,6 +316,7 @@ class Reports extends AdminController
                 'discount_total',
                 'adjustment',
                 'status',
+                'project_id',
             ];
 
             $proposalsTaxesSelect = array_reverse($proposalsTaxes);
@@ -353,6 +376,10 @@ class Reports extends AdminController
                 array_push($where, 'AND currency=' . $this->db->escape_str($by_currency));
             } else {
                 $currency = $this->currencies_model->get_base_currency();
+            }
+            $project_filter =  $this->input->post('project_filter');
+            if(!empty($project_filter)){
+              array_push($where, 'AND project_id ='.$project_filter);
             }
 
             $aColumns     = $select;
@@ -932,11 +959,23 @@ class Reports extends AdminController
                 '(SELECT COALESCE(SUM(amount),0) FROM ' . db_prefix() . 'credits WHERE ' . db_prefix() . 'credits.invoice_id=' . db_prefix() . 'invoices.id) as credits_applied',
                 '(SELECT total - (SELECT COALESCE(SUM(amount),0) FROM ' . db_prefix() . 'invoicepaymentrecords WHERE invoiceid = ' . db_prefix() . 'invoices.id) - (SELECT COALESCE(SUM(amount),0) FROM ' . db_prefix() . 'credits WHERE ' . db_prefix() . 'credits.invoice_id=' . db_prefix() . 'invoices.id))',
                 'status',
+                'id',
             ];
 
             $where = [
                 'AND status != 5',
             ];
+            $invoice_type =  $this->input->post('invoice_type');
+            if(!empty($invoice_type)){
+                $query = $this->db->select('invoice_id')->get(db_prefix().'credits');
+                $result_array = $query->result_array();
+                $desired_ids_array = array_column($result_array, 'invoice_id');
+                if($invoice_type==1){
+                    array_push($where, 'AND id IN (' . implode(', ', $desired_ids_array) . ')');
+                }else if($invoice_type==2){
+                   array_push($where, 'AND id NOT IN (' . implode(', ', $desired_ids_array) . ')');
+                }
+            }
 
             $invoiceTaxesSelect = array_reverse($invoice_taxes);
 

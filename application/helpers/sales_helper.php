@@ -371,6 +371,24 @@ if (!function_exists('format_customer_info')) {
         } elseif ($companyName != '') {
             $companyName = '<b>' . $companyName . '</b>';
         }
+        $company_data  =  $filterData['data'];
+         $client_data = $company_data->client;
+         $client_data= json_decode( json_encode( $client_data), true);
+        if($type =='billing' && $for='payment'){
+             if($client_data['address'] !=''){
+                $street =   $client_data['address'];
+             }else{
+            // this  method  is used for show address of client in payment page
+            $country = get_country($client_data['country']);
+            if(!empty($country)){
+                $street =   $client_data['address'].' '.$client_data['city'];
+                $city =  $country->short_name.' '.$client_data['zip'];
+                $zipCode =  '+'.$country->calling_code.' '.$client_data['phonenumber'];
+             }
+            
+            }
+        
+        }
 
         $format = _info_format_replace('company_name', $companyName, $format);
         $format = _info_format_replace('customer_id', $clientId, $format);
@@ -414,6 +432,16 @@ if (!function_exists('format_customer_info')) {
         $format = trim($format);
 
         return hooks()->apply_filters('customer_info_text', $format, $filterData);
+    }
+}
+if (!function_exists('get_project_info')) {
+    function get_project_info($invoice){
+     
+      if(!empty($invoice->project_data)){
+          $projectData  = $invoice->project_data;
+          echo 'Project: '.$projectData->name;
+      }
+       echo '';
     }
 }
 

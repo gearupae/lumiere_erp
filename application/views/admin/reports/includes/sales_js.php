@@ -24,6 +24,9 @@
    "invoice_status": '[name="invoice_status"]',
    "estimate_status": '[name="estimate_status"]',
    "sale_agent_invoices": '[name="sale_agent_invoices"]',
+   "invoice_type": '[name="invoice_type"]',
+   "customer_filter": '[name="customer_filter"]',
+   "project_filter": '[name="project_filter"]',
    "sale_agent_items": '[name="sale_agent_items"]',
    "sale_agent_estimates": '[name="sale_agent_estimates"]',
    "proposals_sale_agents": '[name="proposals_sale_agents"]',
@@ -31,9 +34,10 @@
    "credit_note_status": '[name="credit_note_status"]',
  }
  $(function() {
-   $('select[name="currency"],select[name="invoice_status"],select[name="estimate_status"],select[name="sale_agent_invoices"],select[name="sale_agent_items"],select[name="sale_agent_estimates"],select[name="payments_years"],select[name="proposals_sale_agents"],select[name="proposal_status"],select[name="credit_note_status"]').on('change', function() {
+   $('select[name="currency"],select[name="project_filter"],select[name="customer_filter"],select[name="invoice_type"],select[name="invoice_status"],select[name="estimate_status"],select[name="sale_agent_invoices"],select[name="sale_agent_items"],select[name="sale_agent_estimates"],select[name="payments_years"],select[name="proposals_sale_agents"],select[name="proposal_status"],select[name="credit_note_status"]').on('change', function() {
      gen_reports();
    });
+  
 
    report_from.on('change', function() {
      var val = $(this).val();

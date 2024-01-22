@@ -1,6 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <?php init_head(); ?>
 <div id="wrapper">
+    
     <div class="content">
         <div class="row">
             <div class="col-md-5">
@@ -84,6 +85,7 @@
                         </a>
                         <?php } ?>
                     </div>
+                    </div>
                 </div>
 
                 <div class="panel_s -tw-mt-1.5">
@@ -97,7 +99,9 @@
                             <div class="col-sm-6 text-right">
                                 <address class="tw-text-neutral-500">
                                     <?php echo format_customer_info($payment->invoice, 'payment', 'billing', true); ?>
+                                     <br>
                                 </address>
+                                <?php echo get_project_info($payment->invoice); ?>
                             </div>
                         </div>
                         <div class="col-md-12 text-center">
