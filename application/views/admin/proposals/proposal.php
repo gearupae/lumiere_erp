@@ -501,6 +501,9 @@ $(document).ready(function() {
 });
 
 
+
+
+
 function handleFile(){
     console.log('working');
     const reader = new FileReader();
@@ -587,6 +590,32 @@ function addItemToTable(item){
     
    }
 }
+// ['group','item', 'description', 'qty','cost','profit','percentage'],
+ $("#downloadCSV").on("click", function() {
+        // Your data (replace this with your actual data)
+        var data = [
+            ['group','item', 'description', 'qty','cost','profit','percentage'],
+        ];
+
+        // Create a CSV string
+        var csvContent = "";
+
+        data.forEach(function(rowArray) {
+            var row = rowArray.join(",");
+            csvContent += row + "\r\n";
+        });
+
+        // Create a Blob containing the CSV data
+        var blob = new Blob([csvContent], { type: "text/csv" });
+
+        // Create a download link and trigger the download
+        var link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = "data.csv";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
 </script>
 
 </body>

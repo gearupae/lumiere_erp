@@ -23,7 +23,7 @@
             <ul class="dropdown-menu width300">
                 <li>
                     <a href="#" data-cview="all" onclick="dt_custom_view('','.table-estimates',''); return false;">
-                        <?php echo _l('estimates_list_all'); ?>
+                        <?php echo _l('estimates_list_all');  ?>
                     </a>
                 </li>
                 <li class="divider"></li>

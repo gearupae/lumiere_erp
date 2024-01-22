@@ -1,14 +1,20 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
+
+
+
 <!-- csv file upload section -->
  <div id="file-upload-section" style="display:none">
 <?php 
 if (staff_can('items', '', 'create')) { ?>
+  <a id="downloadCSV" class="btn btn-success">Download Sample CSV</a>
         <div class="input-group-btn">
         <label  class="control-label"for="import">Import</label>
         <input type="file" title="Format: ['group', 'item', 'description','qty','cost','profit','percentage']"  class="form-control" id="import-file">     
         </div>
         <?php } ?> <br>
+      
+
  </div>
  <!-- end csv file upload section -->
 <div

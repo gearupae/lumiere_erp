@@ -41,6 +41,7 @@ class App_items_table extends App_items_table_template
         $i = 1;
         $total_profit = 0;
         $total_profit_percentage = 0;
+        $total_cost = 0;
         foreach ($this->items as $item) {
             $itemHTML = '';
 
@@ -120,7 +121,7 @@ class App_items_table extends App_items_table_template
                 $itemHTML .= '<td align="right" width="' . $regularItemWidth . '%">' . app_format_money($item['cost'], $this->transaction->currency_name, $this->exclude_currency()) . '</td>';
                 $itemHTML .= '<td align="right" width="' . $regularItemWidth . '%">' . app_format_money($profit, $this->transaction->currency_name, $this->exclude_currency()) . '</td>';
                 $itemHTML .= '<td align="right" width="' . $regularItemWidth . '%">' . app_format_money($profit_percent .'%', $this->transaction->currency_name, $this->exclude_currency()) . '</td>';
-    
+                $total_cost += $item['cost'];
             }
             /**
              * Items table taxes HTML custom function because it's too general for all features/options
@@ -171,6 +172,17 @@ class App_items_table extends App_items_table_template
                                 '.intval($total_profit_percentage/($i-1))."%".'
                             </td>
                         </tr>
+                        <tr>
+        <td colspan = 5></td>
+
+                            <td colspan = 3>
+                                <span class="bold tw-text-neutral-700">Total Cost </span>
+                            </td>
+                            <td class="subtotal" colspan = 2>
+                                '.app_format_money($total_cost,"AED") .'
+                            </td>
+                        </tr>
+                        
                         ';
         }
         return $html;

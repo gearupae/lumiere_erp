@@ -103,8 +103,8 @@ $groupedItems = array_reduce($estimate->items, function ($result, $item) {
 // <head></head>
 // <body data-new-gr-c-s-check-loaded="14.1147.0" data-gr-ext-installed="">';
 
-$items_html = '
-<table width="100%" bgcolor="#fff" cellspacing="0" cellpadding="8">
+$items_html = ' 
+<table  width="100%" bgcolor="#fff" cellspacing="0" cellpadding="8">
    <thead>
       <tr height="30" bgcolor="#14a4e9" style="color:#ffffff;">
          <th width="5%;" align="center">#</th>

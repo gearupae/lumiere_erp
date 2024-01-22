@@ -303,6 +303,9 @@
                     </td>
                     <td class="discount-total"></td>
                 </tr>
+
+
+                
                 <tr>
                     <td>
                         <div class="row">
@@ -333,3 +336,5 @@
     <div id="removed-items"></div>
 </div>
  
+
+
