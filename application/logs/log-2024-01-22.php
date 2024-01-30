@@ -223,3 +223,8 @@ ERROR - 2024-01-22 11:01:55 --> Could not find the language line "No"
 ERROR - 2024-01-22 11:01:55 --> Could not find the language line "Cost"
 ERROR - 2024-01-22 11:01:55 --> Could not find the language line "Profit"
 ERROR - 2024-01-22 11:01:55 --> Could not find the language line "Percentage"
+ERROR - 2024-01-22 13:13:37 --> Severity: error --> Exception: Table 'test_db.tblsessions' doesn't exist C:\xampp\htdocs\epr_new\system\database\drivers\mysqli\mysqli_driver.php 307
+ERROR - 2024-01-22 16:14:34 --> Severity: 8192 --> Optional parameter $hash declared before required parameter $dir is implicitly treated as a required parameter C:\xampp\htdocs\epr_new\modules\file_sharing\helpers\File_sharing_helper.php 62
+ERROR - 2024-01-22 16:14:34 --> Severity: 8192 --> Optional parameter $id declared before required parameter $dir is implicitly treated as a required parameter C:\xampp\htdocs\epr_new\modules\file_sharing\helpers\File_sharing_helper.php 0
+ERROR - 2024-01-22 16:14:34 --> Severity: 8192 --> Optional parameter $type declared before required parameter $dir is implicitly treated as a required parameter C:\xampp\htdocs\epr_new\modules\file_sharing\helpers\File_sharing_helper.php 0
+ERROR - 2024-01-22 16:14:34 --> Severity: Warning --> Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\epr_new\system\core\Exceptions.php:271) C:\xampp\htdocs\epr_new\system\helpers\url_helper.php 564

@@ -410,6 +410,55 @@ class Estimates extends AdminController
         }
     }
 
+   public function convert_to_invoice_format($id)
+   {
+    $canView = user_can_view_estimate($id);
+    if (!$canView) {
+        access_denied('Estimates');
+    } else {
+        if (!has_permission('estimates', '', 'view') && !has_permission('estimates', '', 'view_own') && $canView == false) {
+            access_denied('Estimates');
+        }
+    }
+    if (!$id) {
+        redirect(admin_url('estimates/list_estimates'));
+    }
+    $estimate        = $this->estimates_model->get($id);
+    // echo json_encode($estimate->items);
+    // die;
+    $estimate_number = format_estimate_number($estimate->id);
+
+    try {
+
+        $pdf =   Estimate_pdf($estimate,'convertTOInvoice');
+    } catch (Exception $e) {
+        $message = $e->getMessage();
+        echo $message;
+        if (strpos($message, 'Unable to get the size of the image') !== false) {
+            show_pdf_unable_to_get_image_size_error();
+        }
+        die;
+    }
+
+    $type = 'D';
+
+    if ($this->input->get('output_type')) {
+        $type = $this->input->get('output_type');
+    }
+
+    if ($this->input->get('print')) {
+        $type = 'I';
+    }
+
+    $fileNameHookData = hooks()->apply_filters('estimate_file_name_admin_area', [
+                        'file_name' => mb_strtoupper(slug_it($estimate_number)) . '.pdf',
+                        'estimate'  => $estimate,
+                    ]);
+
+    $pdf->Output($fileNameHookData['file_name'], $type);
+   }
+
+
     /* Convert estimate to invoice */
     public function convert_to_invoice($id)
     {

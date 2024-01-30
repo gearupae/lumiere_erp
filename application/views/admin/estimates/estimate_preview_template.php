@@ -231,6 +231,11 @@
                                         href="<?php echo admin_url('estimates/convert_to_invoice/' . $estimate->id); ?>"><?php echo _l('convert'); ?></a>
                                 </li>
                                 </li>
+                                <li class="divider">
+                                <li><a target="blank"
+                                        href="<?php echo admin_url('estimates/convert_to_invoice_format/' . $estimate->id); ?>">Convert Without Saving</a>
+                                </li>
+                                </li>
                             </ul>
                         </div>
                         <?php } ?>

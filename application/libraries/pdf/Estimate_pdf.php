@@ -7,20 +7,27 @@ include_once(__DIR__ . '/App_pdf.php');
 class Estimate_pdf extends App_pdf
 {
     protected $estimate;
-
     private $estimate_number;
-
+    private $type;
     public function __construct($estimate, $tag = '')
     {
         $this->load_language($estimate->clientid);
-
+       
         $estimate                = hooks()->apply_filters('estimate_html_pdf_data', $estimate);
+       
         $GLOBALS['estimate_pdf'] = $estimate;
 
         parent::__construct();
 
-        $this->tag             = $tag;
+       if($tag =='convertTOInvoice'){
+         $this->type             = $tag;
+       }else{
+            $this->tag             = $tag;
+       }
+
         $this->estimate        = $estimate;
+     
+        
         $this->estimate_number = format_estimate_number($this->estimate->id);
 
         $this->SetTitle($this->estimate_number);
@@ -45,10 +52,17 @@ class Estimate_pdf extends App_pdf
     }
 
     protected function file_path()
-    {
-        $customPath = APPPATH . 'views/themes/' . active_clients_theme() . '/views/my_estimatepdf.php';
-        $actualPath = APPPATH . 'views/themes/' . active_clients_theme() . '/views/estimatepdf.php';
+    {  
+        
+         if($this->type == 'convertTOInvoice'){
 
+            $customPath = APPPATH . 'views/themes/' . active_clients_theme() . '/views/my_estimatepdf_invoice.php';
+            $actualPath = APPPATH . 'views/themes/' . active_clients_theme() . '/views/estimatepdf.php';     
+        }else{
+            $customPath = APPPATH . 'views/themes/' . active_clients_theme() . '/views/my_estimatepdf.php';
+            $actualPath = APPPATH . 'views/themes/' . active_clients_theme() . '/views/estimatepdf.php';
+        }
+       
         if (file_exists($customPath)) {
             $actualPath = $customPath;
         }

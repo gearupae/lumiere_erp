@@ -59,7 +59,7 @@ if ( ! function_exists('file_sharing_set_realpath'))
  * @param  string $hash [description]
  * @return [type]       [description]
  */
-function fs_new_file_database($path, $hash = "", $id = '', $type = '', $dir){
+function fs_new_file_database($path, $hash = "", $id = '', $type = '', $dir=''){
 	$CI = & get_instance();
 	$date = new DateTime();
 	$fileid = $id == '' ? $date->getTimestamp() : $id;
